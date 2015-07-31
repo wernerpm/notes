@@ -1,0 +1,283 @@
+# Curso Android
+
+## Eventos
+- [Dev fest sul](http://devfestsul.com.br/)
+  - GDGPoa - Google Developer Group
+- TDC 2014 - The Developers Conference
+
+## Tópicos
+- Dá para usar o mesmo SQLite schema para vários devices
+- Eclipse -> Window -> SDK Manager
+  - Olhar de vez em quando para atualizar a SDK
+  - Extras = Play Services, Google Maps, Youtube, etc
+- gen, libs e bin pode ir no .gitignore
+- Classe R = Mapa do projeto (Eclipse compila junto)
+  - bin/R.txt
+  - Não precisa versionar
+  - Às vezes eclipse perde
+    - Project -> Clean
+    - Fechar tudo, apagar bin e gen
+- Se for usar API do Google, compilar projeto com imagem do Google API (Compile with)
+- Tela = Activity {1 Java (Controller) + 1 XML (View)}
+- values-es, values-en, values-pt, etc. - Automatiza internacionalização
+- layout-land, layout-port, etc. - Automatiza layouts diferentes
+- DS = Pixel relativo (imagem)
+- SP = Pixel relativo (texto)
+- Usar evento onPause para fazer manutenção, atualização, etc
+- Android:id nos objetos do layout vai ser o ID para chamá-los
+  - TextView tv = (TextView) findViewById(R.id.textView1)
+- Aplicação = Última activity aberta
+  - Ao fechar, aplicação encerra
+- Intent = Objeto para comunicar activities umas com as outras (apps diferentes inclusive)
+  - Passa parâmetros com putExtra
+  - Chama com startActivity
+  - [Common Intents](https://developer.android.com/guide/components/intents-common.html)
+  - Cada app pode ter os seus (FB, Twitter). Usar em vez de instalar o SDK (às vezes)
+- Usar listener em vez do onClick *(Boas práticas)*
+  - onClick é OK para protótipos
+  - Ver ExemploListView
+- Não pode fazer conexão Web / Rede / etc na Thread principal (UI)
+  - handler = Mensageiro entre Threads
+  - Manda mensagem de thread secundária para UI
+  - Uma thread não pode mexer na outra
+- AsyncTask facilita (em vez de threads comuns), mas consome mais memória
+- Ao girar device, Android roda create de novo, destrói e recria atividades
+  - Tem que salvar state manual
+- View com lista customizada
+  - Tem que extender BaseAdapter
+  - Adapter faz meio campo entre View e dados
+  - Similar ao TableViewDelegate do iOS
+  - Exemplos em AulaAdapters
+  - ViewPager usa PagerAdapter
+- Google Cloud Messaging - GCM
+  - Para enviar Push Notifications
+  - Também envia SMS
+  - Dá para substituir Push por SMS em locais com sinal ruim
+- AlarmManager - Usa relógio do sistema
+  - Agendados tipo Cron para rodar tarefas
+  - Tem que passar uma PendingIntent
+  - Por usuário (App), tarefas são unregistradas quando desinstala App
+- SupportLibrary (do Google)
+  - Dá suporte às APIs Anteriores
+  - Em vez de ficar fazendo IF de funcionalidade no código
+  - Usar SupportLibrary e usar novos componentes da API
+  - Library se encarrega de fazer coisas rodarem nos Androids anteriores
+- Separar classes em packages (Entity, Services, DBO, etc)
+- Usar nome do componente na classe para ficar mais fácil de achar (ProdutoActivity, ProdutoService, ProdutoPOJO)
+- Cuidar consumo de bateria (um dos fatores que faz usuário desinstalar App)
+- Olhar Petshop - AppDespesas
+  - Tem de tudo, notification, WebService, JSON, SQLite
+  - getApplication() -> Objeto da Application ou activity Principal (Tipo Bootstrap ou AppDelegate)
+  - Colocar URLs no arquivo de Strings
+  - Trabalho pesado do App - rodar em Service
+    - Não travar Thread Principal
+    - Não depender 100% dele porque Android pode matar serviço
+    - Tratar erro / comunicação
+  - Se quiser rodar Service no Boot
+    - Adicionar no Manifest
+    - BOOT_COMPLETED (Broadcast)
+    - BootReceiver (Implementar BroadcastReceiver)
+- Sistema operacional manda Broadcast (Intent) para todos os Apps
+  - App pode implementar BroadcastReceiver para receber dados
+  - Lança no Manifest
+  - Ou Fazer na Activity (dar registerReceiver ou unregister)
+  - Receiver de bloqueio de tela só pode ser registrado assim (não dá para colocar no Manifest)
+- Comunicar serviço com atividades:
+  - Broadcast = Outros Apps podem capturar
+  - Handler = Mensagens menores (menos dados)
+  - Olhar AulaServices
+- Usar SharedPreferences para preferências do sistema
+  - Bom para dados simples
+  - Chave => valor
+- Resolver dependências no Eclipse (Cmd + Shift + O)
+  - Organiza Imports
+- Vários Bancos SQLIte
+  - Boa abordagem para multi-idiomas
+- P/ Banco usar objeto content values
+  - AulaCrud => ExercicioCrud
+  - SimpleCursorAdapter (Deprecated)
+  - Loader (Novo Adapter DB)
+- Values => Dimens
+  - Dimensões do App
+  - Arquivo XML tipo um CSS
+- Se gestos do app não são básicos, explicar para o usuário (Guia)
+  - Só se navegação for complexa e não-intuitiva
+- Fragments
+  - Cada fragmento é uma activity
+  - Pode vários em uma tela
+  - FragmentManager = Gerencia tudo
+  - FragmentTransaction = Gerencia Backstack
+- Fazer manipulação de DB em thread separada (para não ficar lento)
+  - Não deixar aplicativo travar
+- ADB = Ferramenta console para manipular emulador ou Device
+  - asb shell dumpsys meminfo
+- Window -> Show View -> Op Perspective -> Other -> DDMS (ADB Visual Eclipse)
+  - DDMS -> Network (Dar start, rodar app)
+  - Diagrama de alocações (recursos alocados no App)
+- Gradle / Maven => Gerenciamento Libs
+- Rodar montagem da lista CRUD no onStart e onRestart (App não roda Start na volta do pause)
+- Parse XML
+  - Dom = Mais fácil
+  - Sax = Consome menos e é mais rápido
+- Múltiplos Uploads = Gerar Chunks
+
+## Material
+- Google IO
+- https://github.com/luciofm
+- Video - App nike fitness
+- Olhar LogCat
+- Youtube - Dev Bytes
+- Android Asset Studio
+  - Cria assets com diversas resoluções
+- F-Droid
+  - Play store livre
+- Youtube - Thiengo Calopsita
+  - Curso completo online
+- Livros
+  - Casa do código
+  - Head First
+  - O'Reilly
+  - IT-Ebooks.info/tag/android
+  - Android Application Development Cookbook
+- SlideShare - JacksonFDAM
+  - Aplicações real time Android
+  - Procurar na grade do FISL
+
+## Libs, APIs, Uteis
+- Advanced Rest Client - Extnsão Chrome para emular (simular) uso de API
+- Emulador GenyMotion
+- GSON = Parser JSON
+- Ion = Requisições Assíncronas HTTP
+- [http://square.github.io Square - Pessoal Foda]
+- Injeção de dependência
+  - RoboGuice
+  - Dagger, ButterKnife, Android Annotations
+- Manipulação de Imagens
+  - Picasso
+- ORM
+  - Android ActiveRecord (Muito Boa)
+  - GreenDAO, ORMLite
+
+# Curso Android Avançado
+
+- Sempre observar design guidelines
+- Boas práticas
+  - Sempre estar com API Atuaizada
+  - Usar layout XML em vez de montar no Java
+- Referências
+  - Mobile patterns.com
+  - pttrns.com
+  - Android Arsenal . com (libs)
+  - Android niceties
+- Material design
+  - Instagram (Youtube)
+  - dev.android
+  - github / romainguy / google-io-2014
+  - SDK / pasta samples - demo do android oficial
+  - Developer . android -> Training, Getting started
+- Mandar parâmetros entre activities
+  - Por bundle (intent)
+    - Serializar
+  - Não usar shared preferences
+- res / menu / main.xml = Menu da ActionBar
+  - ShowAsAction => ifRoom (Mostra na barra se tem espaço, senão vai para cortina)
+- Cuidar com botão do Up para evitar acidentes
+  - Desabilitar quando usuário navega mais a fundo, preenche form grande
+  - Se usuário clicar sem querer, volta para a home e user perde toda a navegação
+- Não deixar ligado location service (consome bateria)
+  - Ligar, usar e desligar
+  - Dar remove updates
+  - Para pegar endereço precisa da lib do google
+- KeyStore - fica assinaturas dos apps
+- Não perder chave da produção
+  - Perde app ou tem que trocar o bundle
+- Criar conta no gmail para API do cliente (maps, analytics, etc)
+- Dá para usar drawable -> Shape em vez de imagem (tipo canvas HTML)
+- ActionBar / TabListener
+- Android asset studio = Faz assets redimensionados
+- ActionBarSherlock = Usar para o ActionBar
+- Ollhar gist.github.com / jacksonfdam
+- Fechar o app não é necessário (quit do java)
+  - Sistema mata services, desregistra broadcasts, não funciona mais nada
+- Usar somente o que for necessário (hardware é restrito)
+  - Economizar request / response, usar somente cabeçalho (códigos) HTTP quando for possível
+- Tentar só usar HTTP e HTTPS (Nem toda rede terá portas abertas)
+- Olhar parse.com
+- BorghettiTableView (iOS)
+- Rodar thread no onStart em vez de onCreate
+- Thread.start (não é .run)
+- AndroidHive.info
+- Olhar libValley (HTTP Data)
+- Runnable é melhor que Thread
+- Olhar ListViewAnimations (Github nhaarman)
+  - ListViewInteractions (Github)
+- DefaultHttpClient X AndroidHttpClient
+  - Existe pasta de cache padrão em vez de usar SD
+    - Para dados sensíveis
+- Prefetch = Busca antecipada (Para app abrir mais rápido)
+  - Cuidar do Wifi e bateria
+- Atualizador é todo um novo sistema
+  - Desenhar fluxo do atualizador
+  - Poupar 3G e bateria
+  - Lib Android AutoUpdater - Força user a atualizar
+- Olhar libcards-ui e cardslib
+  - Cards é legal
+- Can I Use . com - Verifica APIs HTML5 / Browser
+  - Android Arsenal / Bootstrap
+- Loader = adapter com paginação / assincronia
+  - Roda automaticamente em thread
+  - Bom para grandes cargas (muitas linhas)
+  - Loader <> Adapter
+  - Loader popula adapter no finished
+- ContentProvider = API de app para app
+  - Banco separado do app local
+  - DB Auxiliar e API para exteriorizar
+- Dá para usar projeto Mono para Android (compila nativo)
+- Olhar Series Guide
+  - Tem source (OS)
+  - Tem Sync (olhar exemplo)
+  - SyncAdapter (atualizador)
+- Widget = App à parte (outro projeto)
+  - Comunica com o app via Content Provider
+  - Bem simples / limitado
+    - Olhar exercício AppWidget
+  - Dá para fazer activity de configuração
+    - Pré-feita (não é activity normal)
+- Performance
+  - DDMS = Profiling
+    - Consumo de memória, CPU, rede
+    - Threads, TraceView, Heap
+    - Testar app, atualizador e forçar GC ou estouro de memória, matar thread
+    - Para não corromper dados, usar escrita atômica (try/catch)
+  - Usar imagens do tamanho do device (resampling come muito CPU)
+  - Paginar dados (não baixar 5000 registros)
+  - Trazer o mínimo de informação possível do server
+  - Otimizar tipos
+    - Ex: int x Integer
+    - String[] x ArrayList
+    - Usar estáticos quando possível
+    - Propriedades usar static final
+      - Compilador (dalvik) faz ficar mais simples
+    - Evitar get/set
+  - Olhar ProGuard (ferramenta otimização)
+  - Evitar otimização prematura
+  - Fazer tracking (analytics) para ver navegação padrão
+  - BugSense = monitoramento de exceptions
+    - Android ACRA = Bug reports (crashes)
+- Cuidado com a chave do app
+- Usar socket que deixa conexão aberta em vez de consultar HTTP a cada x minutos
+- AulaServicos (Exemplo services e comunicação)
+- AIDL - Comunicação intra-apps
+- Olhar como funciona Pool de Threads
+- ConnectivityManager - Verifica conexões
+- Serviço não passa grande quantidade de dados por Intent
+  - Usar Content Provider
+- App muito grande, quebrar em apps diferentes
+  - Serviços, packages
+  - Deixar o grosso do processamento nos services
+- Se app é feio, usuário vai usar outro
+- Procurar AnimationSets no Google ou Stack Overflow (é um XML estilo gif animado)
+- Activity pode ter tema específico, diferente do resto do app (especifica no manifest)
+  - Android holo colors . com
+- Referências
+  - site Vogella (Lars Vogel)
