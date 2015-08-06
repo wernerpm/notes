@@ -1,6 +1,6 @@
 # GDG DevFest Sul 2014 (23/08/2014)
 
-## The Webcomponets Ecosystem
+## The Webcomponents Ecosystem
 - [Rob Dodson](http://github.com/robdodson)
 
 
@@ -20,7 +20,7 @@
   - [customelements.io](http://customelements.io/)
 
 
-## Se eu posso, você també pode - Animações para Desenvolvedores
+## Se eu posso, você também pode - Animações para Desenvolvedores
 - [Lucio Maciel](http://twitter.com/luciofm)
 - [Slides](http://github.com/luciofm/ifican)
   - Usar GenyMotion como tablet
